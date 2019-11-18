@@ -18,8 +18,8 @@ public class Item
     public String name;
     public int weight;
     
-    public static final int MAX_WEIGHT = 30;
-    public static final int MIN_WEIGHT = 1;
+    public final int MAX_WEIGHT = 30;
+    public final int MIN_WEIGHT = 1;
 
     /**
      * Create an Item described "description". 

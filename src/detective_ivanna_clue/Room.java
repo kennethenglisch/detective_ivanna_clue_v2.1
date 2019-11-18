@@ -2,6 +2,7 @@ package detective_ivanna_clue;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Iterator;
 import java.util.ArrayList;
 
@@ -26,6 +27,9 @@ public class Room
     private HashMap<String, Item> items;
     private HashMap<String, NPC> npcs;
     
+    private Stack<Item> itemStack; 
+    private Stack<NPC> npcStack;
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -38,6 +42,9 @@ public class Room
         exits = new HashMap<>();
         items = new HashMap<>();
         npcs = new HashMap<>();
+        
+        itemStack = new Stack<Item>();
+        npcStack = new Stack<NPC>();
     }
 
     /**
@@ -126,6 +133,16 @@ public class Room
     }
     
     /**
+     * should not use it bc if we pop we are deleting it
+     * @param item
+     */
+    public void removeAnyItem(Item item) 
+    {
+    	int i = itemStack.indexOf(item);
+    	itemStack.remove(i);
+    }
+    
+    /**
      * Getting all Items out of the room and putting it into a string.
      * @return A string with all items inside of this room.
      */
@@ -136,10 +153,25 @@ public class Room
         
         for (String i : item)
         {
-            itemString += " " + i + " - " + items.get(i).description + 
-            " (weight category: " + items.get(i).weight + " of " + items.get(i).MAX_WEIGHT + ")\n";
+            itemString += "\n" + i + " - " + items.get(i).description + 
+            " (weight category: " + items.get(i).weight + " of " + items.get(i).MAX_WEIGHT + ")";
         }
         
+        return itemString;
+    }
+    
+    public String getAnyRoomItem() 
+    {
+    	String itemString = "";
+    	
+    	for (int i = 0; i < itemStack.size(); i++) 
+    	{
+    		Item it = itemStack.get(i);
+    		
+    		itemString += "\n" + it.name + " - " + it.description + 
+    					  " (weight category: " + it.weight + " of " + it.MAX_WEIGHT + ")";
+    	}
+    	
         return itemString;
     }
     
@@ -153,6 +185,24 @@ public class Room
         return items.isEmpty();
     }
     
+    public void setAnyWeapon(Item item) 
+    {
+    	itemStack.add(item);
+    }
+    
+    public Item getAnyWeapon() 
+    {
+    	return itemStack.pop();
+    }
+    
+    public boolean isEmptyItems() 
+    {
+    	return itemStack.isEmpty();
+    }
+    
+   
+    
+    
     /**
      * Setting an NPC inside of this room. (Putting it into the HashMap)
      * @param name A string representing the name of the NPC.
@@ -163,6 +213,14 @@ public class Room
         npcs.put(name, npc);
     }
     
+    public void setAnyNPC(NPC npc) 
+    {
+    	// make sure there can only be one NPC
+    	if (npcStack.size() - 1 <=1)
+    		npcStack.add(npc);
+    	else System.out.println("NPC could not be set in room '" + description + "'. It is only allowed to place one NPC per room!");
+    }
+    
     /**
      * Pulling a specific NPC out of the HashMap.
      * @param npc A string representing the npc's name to pull him out.
@@ -171,6 +229,11 @@ public class Room
     public NPC getNPC(String npc)
     {
         return npcs.get(npc);
+    }
+    
+    public NPC getAnyNPC() 
+    {
+    	return npcStack.get(0);
     }
     
     /**
@@ -188,5 +251,23 @@ public class Room
         }
         
         return roomNPC;
+    }
+    
+    public String getAnyNPCString() 
+    {
+    		String roomNPC = "";
+    		
+    		for (int i = 0; i < npcStack.size(); i++) 
+    		{
+    			NPC npc = npcStack.get(i);
+    			roomNPC += "\n" + npc.name.substring(0,1).toUpperCase() + npc.name.substring(1);
+    		}
+    		
+    		return roomNPC;
+    }
+    
+    public boolean isEmptyNPC() 
+    {
+    	return npcStack.isEmpty();
     }
 }

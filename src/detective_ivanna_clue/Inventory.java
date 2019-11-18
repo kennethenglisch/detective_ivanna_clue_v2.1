@@ -3,6 +3,7 @@ package detective_ivanna_clue;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Class Inventory - the inventory of the player in an detective game.
@@ -18,6 +19,8 @@ public class Inventory
     public static final int MAX_INVENTORY =  40;
     public int inventoryWeight = 0;
     public boolean pickable = false;
+    
+    private Stack<Item> inv; 
 
     /**
      * Creates the Inventory
@@ -25,6 +28,7 @@ public class Inventory
     public Inventory()
     {
        inventory = new HashMap<>();
+       inv = new Stack<Item>();
     }
 
     /**
@@ -36,6 +40,19 @@ public class Inventory
     {
         if (inventoryWeight + item.weight <= MAX_INVENTORY) {
             inventory.put(name, item);
+            inventoryWeight += item.weight;
+            pickable = true;
+        }
+        else if (inventoryWeight + item.weight > MAX_INVENTORY){
+            System.out.println("Your inventory is full and you can't handle any more items.");
+            pickable = false;
+        }
+    }
+    
+    public void setAnyInventory(Item item) 
+    {
+    	if (inventoryWeight + item.weight <= MAX_INVENTORY) {
+            inv.add(item);
             inventoryWeight += item.weight;
             pickable = true;
         }
@@ -64,6 +81,23 @@ public class Inventory
         return inventoryString;
     }
     
+    public String getAnyInventoryString()
+    {
+        String inventoryString = "Inventory:";
+        Set<String> keys = inventory.keySet();
+        
+        for (int i = 0; i < inv.size(); i++) 
+    	{
+    		Item it = inv.get(i);
+    		
+    		inventoryString += " " + it.name;
+    	}
+        
+        inventoryString += "\nInventory used: " + inventoryWeight + " / " + MAX_INVENTORY;
+        
+        return inventoryString;
+    }
+    
     /**
      * Pulling an item out of the inventory.
      * @param item The item's name.
@@ -72,6 +106,18 @@ public class Inventory
     public Item getItem(String item)
     {
         return inventory.get(item);
+    }
+    
+    public Item getAnyItem() 
+    {
+    	Item i = inv.pop();
+    	inventoryWeight -= i.weight;
+    	return i;
+    }
+    
+    public boolean isEmpty() 
+    {
+    	return inv.isEmpty();
     }
     
     /**
@@ -83,6 +129,15 @@ public class Inventory
         inventoryWeight -= inventory.get(item).weight;
         inventory.remove(item);
     }
+    /*
+     * not using that bc we delete when we pop
+     */
+    public void removeAnyItem(Item item) 
+    {
+    	int i = inv.indexOf(item);
+    	inventoryWeight -= inv.get(i).weight;
+    	inv.remove(i);
+    }
     
     /**
      * Clears the HashMap and sets the weight to 0
@@ -91,5 +146,11 @@ public class Inventory
     {
         inventory.clear();
         inventoryWeight = 0;
+    }
+    
+    public void clearInv() 
+    {
+    	inv.clear();
+    	inventoryWeight = 0;
     }
 }
