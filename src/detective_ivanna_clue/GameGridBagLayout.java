@@ -123,7 +123,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 3;
+		gbc2.gridx = 2;
 		gbc2.gridy = 0;
 		
 		panel2.add(btnGoNorth, gbc2);
@@ -139,7 +139,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 3;
+		gbc2.gridx = 2;
 		gbc2.gridy = 2;
 		
 		panel2.add(btnGoSouth, gbc2);
@@ -155,7 +155,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 2;
+		gbc2.gridx = 1;
 		gbc2.gridy = 1;
 		
 		panel2.add(btnGoWest, gbc2);
@@ -187,7 +187,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 4;
+		gbc2.gridx = 3;
 		gbc2.gridy = 1; 
 		
 		panel2.add(btnGoEast, gbc2);
@@ -203,7 +203,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 5;
+		gbc2.gridx = 4;
 		gbc2.gridy = 1;
 		
 		panel2.add(btnGoRight, gbc2);
@@ -219,7 +219,7 @@ public class GameGridBagLayout {
 			}
 		});
 		
-		gbc2.gridx = 3;
+		gbc2.gridx = 2;
 		gbc2.gridy = 1;
 		
 		panel2.add(btnBack, gbc2);
