@@ -693,7 +693,8 @@ public class GameGridBagLayout {
             printStream.println("You have a key and a mysterious treasure chest in your inventory...\nMaybe the key fits in the lock?");
             printStream.println("Trying to open the treasure chest...");
             printStream.println("You found a note! It is now avaible in your inventory.");
-            inventory.setInventory(note.name, note);
+//            inventory.setInventory(note.name, note);
+            inventory.setAnyInventory(note);
         }
     }
 
@@ -836,12 +837,17 @@ public class GameGridBagLayout {
 		else 
 		{
 			Item i = currentRoom.getAnyWeapon();
-		    inventory.setAnyInventory(i);
-		    if (inventory.pickable){
-//		        currentRoom.removeAnyItem(i);
+		    if (inventory.canBePickedUp(i))
+		    {
+			    inventory.setAnyInventory(i);
 		        printStream.println("You have picked up:\n" + i.description
 		            + ".\nIt is now available in your inventory.");
 		    }
+		    else
+		    {
+		    	currentRoom.setAnyWeapon(i);
+		    	printStream.println("Your inventory is full or this weapon is to heavy. You can't pick up this item.");
+		   	}
 		}
 		carrySecretItems();
 	}

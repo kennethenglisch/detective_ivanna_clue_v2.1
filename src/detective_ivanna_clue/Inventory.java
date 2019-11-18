@@ -51,15 +51,17 @@ public class Inventory
     
     public void setAnyInventory(Item item) 
     {
-    	if (inventoryWeight + item.weight <= MAX_INVENTORY) {
-            inv.add(item);
-            inventoryWeight += item.weight;
-            pickable = true;
-        }
-        else if (inventoryWeight + item.weight > MAX_INVENTORY){
-            System.out.println("Your inventory is full and you can't handle any more items.");
-            pickable = false;
-        }
+    	inv.add(item);
+        inventoryWeight += item.weight;
+     
+    }
+    
+    public boolean canBePickedUp(Item item) 
+    { 
+    	boolean pickUp;
+    	if (inventoryWeight + item.weight <= MAX_INVENTORY) pickUp = true;
+    	else pickUp = false;
+    	return pickUp;
     }
     
     /**
