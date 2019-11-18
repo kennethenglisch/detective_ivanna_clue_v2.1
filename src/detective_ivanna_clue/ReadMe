@@ -12,6 +12,8 @@ To start this application, create an instance of class "Game" and call its
 
 TO-DO:
 
+- how to handle picking up a weapon that was not last dropped
+- switching weapons (inventory slots in gui??)
+
 - multi language support
-- GUI
 - Story
